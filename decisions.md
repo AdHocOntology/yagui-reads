@@ -31,7 +31,9 @@ DfE-validated programme) — typically introducing s, a, t, p, i, n first so man
 words can be built early. The scheme defines both the phoneme introduction order
 and the wordlist tiers.
 
-Open: pick the specific scheme. Resolves review §1.3, §5.3.
+Open: pick the specific scheme — tracked as the **first task in `todo.md`**.
+Nothing about curriculum content is settled until this is chosen. Resolves
+review §1.3, §5.3.
 
 ## D3 — Android-first for 1.0; PWA delivery; iOS is best-effort dogfooding
 **Status: Decided (2026-07-23)**
@@ -64,12 +66,64 @@ speech ASR does not exist reliably today. The MVP uses guardian pass/fail.
 
 Resolves review §6.1–6.2; descopes §2.1 ASR.
 
+## D5 — Blending is the terminal step; a successful blend is the pass
+**Status: Decided (2026-07-23)**
+
+The core loop of a single word attempt (prototype form):
+
+1. **Present** the word as grapheme blocks (D1).
+2. **Explore** — the child taps each grapheme and hears its clean, isolated
+   phoneme (D7). Repeatable.
+3. **Model the blend** *(later stages, not required in the prototype)* — the app
+   demonstrates blending the phonemes into the whole word ("c-a-t → cat").
+4. **Attempt** — the child records themselves saying the whole word.
+5. **Playback.**
+6. **Judge** — the guardian marks pass/fail. **Pass = the child intelligibly
+   *blended* the phonemes into the correct word.** Naming letters, or parroting a
+   memorised word without blending, is not a pass (guardian's judgement in the
+   prototype; the descoped ASR dream would enforce this automatically later).
+7. **Celebrate** on pass (minimal in the prototype; rich by 1.0, see D6).
+
+The pass criterion is specifically *blending* — that is the skill being taught,
+and it is the terminal gate of every word attempt. This closes the gap the review
+flagged (the old flow stopped at tapping isolated sounds). Resolves review §1.4.
+
+## D6 — Delivery staging: Prototype → intermediate stages → 1.0 (= MVP)
+**Status: Decided (2026-07-23)**
+
+Terminology correction that re-frames the whole review. "MVP" was the wrong word
+earlier; there are several stages between the first testable build and 1.0:
+
+- **Prototype** (first iteration): tests the *mechanic* only — word → tap
+  graphemes for phonemes → record → guardian pass/fail (blend gate, D5). It does
+  **not** need to hold a child's attention or prove engagement; it validates the
+  idea and the plumbing. A minimal celebration is welcome because it is cheap and
+  pleasant, not because the prototype must measure engagement.
+- **Intermediate stages**: progressively add modelled blending, voice-guidance
+  cues, 2D animation, richer rewards, curated tiers, and the prior-learning mode.
+- **1.0 = the MVP**: the first genuinely viable *product* — the reward /
+  stimulation loop, voice guidance, animation, and curriculum tiers are all
+  present. Everything the vision marks "essential for 1.0" is essential for *this*
+  milestone, not for the prototype.
+
+So the review's "put the reward loop in the MVP to measure engagement" was aimed
+at the wrong stage: the engagement loop belongs at 1.0/MVP, while the prototype
+stays focused on the mechanic. Resolves review §4.1 framing; refines §3.2.
+
+## D7 — Schwa problem solved by sourcing licensed phoneme audio
+**Status: Decided (2026-07-23)**
+
+Clean, un-schwa'd, isolated consonant phonemes will come from an existing
+high-quality recording set under an appropriate licence — a free/suitably-licensed
+set, or a paid commercial-use sample pack — rather than being recorded from
+scratch. This resolves the "schwa problem" and also cuts the content-production
+burden the review flagged. TTS remains rejected for isolated phonemes.
+Resolves review §1.2; mitigates §5.1.
+
 ---
 
 ## Still open (to address in the medium-severity pass)
 
-- **Minimal reward/celebration in the MVP** (review §3.2) — needed so the "test
-  the idea" phase can measure engagement, not just plumbing. Not yet decided.
-- Blending step (§1.4), touch-target/ergonomics (§3.1), guardian-handoff flow
-  (§3.3), progression/mastery model (§4.3), accent/dialect for recordings (§5.4),
-  and the remaining medium items.
+- Touch-target / ergonomics (review §3.1), guardian-handoff flow (§3.3),
+  progression/mastery model (§4.3), accent/dialect for recordings (§5.4), and the
+  remaining medium items.
