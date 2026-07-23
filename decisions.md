@@ -175,9 +175,27 @@ scheme, since the scheme defines the item set and tier boundaries.
 
 Resolves review §4.3.
 
+## D11 — Accent: neutral UK English now; American English at 1.0+
+**Status: Decided (2026-07-23)**
+
+- **Prototype / early stages:** **UK English**, kept **relatively neutral** — a
+  modern, region-light standard Southern British English. Avoid strong or dated
+  RP and avoid marked regional accents, so it stays broadly intelligible and
+  matches the child's spoken environment. This also aligns with the (UK) phonics
+  schemes under consideration (D2).
+- **American English (General American):** a **1.0+ requirement** — a second
+  accent set added at or after 1.0, not in the prototype.
+
+**Implication:** because a second accent is coming, phoneme audio and word
+recordings must be **keyed by accent** in the data model from the start — do not
+bake a single accent in. Adding General American later should be additive
+(another audio set + labels), not a refactor.
+
+Resolves review §5.4.
+
 ---
 
-## Still open (to address in the medium-severity pass)
+## Still open
 
-- Accent / dialect for the phoneme audio and word recordings (review §5.4) — must
-  match the child's spoken environment and align with the chosen phonics scheme.
+The high- and medium-severity review passes are complete. Remaining follow-ups
+are tracked in `todo.md`.
