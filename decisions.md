@@ -120,10 +120,64 @@ scratch. This resolves the "schwa problem" and also cuts the content-production
 burden the review flagged. TTS remains rejected for isolated phonemes.
 Resolves review §1.2; mitigates §5.1.
 
+## D8 — Tablet-first, but keep the path to phone open
+**Status: Decided (2026-07-23)**
+
+Tablet is the primary target (consistent with the child's device, D3). Phone is
+not a goal now, but no design decision should make a later phone port impossible
+or costly. In practice:
+
+- Fluid/responsive layout with relative units — do not hardcode tablet
+  dimensions.
+- The word's grapheme-block row must be able to **reflow / wrap** for narrower
+  screens rather than assuming it fits on one line.
+- Touch targets sized large and well-spaced for imprecise young fingers, with a
+  minimum that still works on a phone; handle accidental multi-touch / palm
+  contact.
+
+Resolves review §3.1.
+
+## D9 — Per-word guardian judging now; batch review tested later
+**Status: Decided (2026-07-23)**
+
+The prototype keeps the simple per-word flow: child records → guardian judges →
+pass/fail, on one shared device with a handoff each word (D5). This is accepted as
+clunky but fine for validating the mechanic.
+
+**After** the prototype, test a **batch-review feature**: the child records a set
+of attempts, and the guardian reviews and judges them together at the end,
+reducing per-word handoff friction. Deferred — not built in the prototype.
+
+Resolves review §3.3.
+
+## D10 — Progression: scheme hierarchy introduces; spaced repetition reviews
+**Status: Decided (2026-07-23)** — SR system tentative, refined with the scheme
+
+Two mechanisms with distinct jobs:
+
+- **Introduction** is governed by the chosen phonics scheme's **sequential
+  hierarchy and set relations** (todo.md Now-task, D2). A sound/word is only
+  introduced once its prerequisite graphemes/phonemes have been taught — i.e. a
+  word cannot appear before every grapheme in it is known. Advancement to the
+  next item is gated on sufficient mastery of prior items.
+- **Review** is governed by **spaced repetition**. The evidence for the spacing
+  effect is strong for *retention of already-introduced items* — it is not an
+  introduction-ordering system, so it sits on top of the scheme hierarchy, not in
+  place of it. Already-passed sounds/words are re-surfaced on expanding intervals
+  to keep them fresh.
+
+**SR system (tentative):** a **Leitner-style box** scheme — simple, transparent,
+easy to implement, and well-suited to the small item counts and young audience.
+Items move up a box on a pass and down on a fail; higher boxes are reviewed less
+often. Can be upgraded to a modern algorithm (SM-2 / FSRS) later if needed. The
+concrete intervals and mastery thresholds are finalised alongside the phonics
+scheme, since the scheme defines the item set and tier boundaries.
+
+Resolves review §4.3.
+
 ---
 
 ## Still open (to address in the medium-severity pass)
 
-- Touch-target / ergonomics (review §3.1), guardian-handoff flow (§3.3),
-  progression/mastery model (§4.3), accent/dialect for recordings (§5.4), and the
-  remaining medium items.
+- Accent / dialect for the phoneme audio and word recordings (review §5.4) — must
+  match the child's spoken environment and align with the chosen phonics scheme.
