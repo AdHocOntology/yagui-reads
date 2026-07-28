@@ -16,7 +16,21 @@ word. A guardian judges whether they blended the sounds correctly.
 | `phonics-schemes.md` | Evaluation of candidate phonics schemes; recommendation |
 | `todo.md` | Backlog. `@user` marks tasks the author owns |
 
-## Running the prototype
+## Testing on a device
+
+The app is deployed to GitHub Pages by `.github/workflows/pages.yml`:
+
+**https://adhocontology.github.io/yagui-reads/**
+
+Open that on the tablet and use the browser menu's **Install app** / **Add to
+Home Screen**. HTTPS is not optional here — both the service worker and
+microphone access require a secure context, which is why local `file://` or a
+plain-HTTP LAN address will not do.
+
+First-time setup (one click, needed once): in the repository's
+**Settings → Pages**, set **Source** to **GitHub Actions**.
+
+## Running the prototype locally
 
 The app is a dependency-free PWA — no build step, no toolchain. Serve `app/`
 over HTTP (a `file://` open will not work: it uses ES modules and a service
