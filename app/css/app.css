@@ -1,0 +1,268 @@
+/*
+ * decisions.md D8 — tablet-first, but nothing here may block a later phone port.
+ * Rules: no hardcoded device dimensions, relative units, the grapheme row WRAPS,
+ * and touch targets stay large enough for imprecise young fingers on any screen.
+ */
+
+:root {
+  --bg: #12293f;
+  --bg-2: #1b3a5c;
+  --ink: #f4f8fb;
+  --block: #fdfdfa;
+  --block-ink: #17324c;
+  --accent: #ffb703;
+  --pass: #2e9e5b;
+  --fail: #b8553f;
+  --muted: #93b0c7;
+
+  /* Blocks scale with the viewport but never below a comfortable tap target. */
+  --block-size: clamp(4.5rem, 17vmin, 9rem);
+  --block-gap: clamp(0.5rem, 2vmin, 1.1rem);
+  --tap-min: 3.5rem; /* floor for every interactive control */
+}
+
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+/* An author-set `display` beats the UA rule for [hidden], which would silently
+   leave every stage button on screen at once. Keep this above the components. */
+[hidden] { display: none !important; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  background: radial-gradient(120% 90% at 50% 0%, var(--bg-2), var(--bg));
+  color: var(--ink);
+  font-family: ui-rounded, "Nunito", "Segoe UI", system-ui, -apple-system, sans-serif;
+  /* Children hold devices badly; stop stray drags scrolling or zooming. */
+  overscroll-behavior: none;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right)
+           env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+
+.notice {
+  flex: none;
+  background: #6b3fa0;
+  color: #fff;
+  font-size: 0.8rem;
+  text-align: center;
+  padding: 0.4rem 0.75rem;
+  letter-spacing: 0.01em;
+}
+
+.screen {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(0.9rem, 3vmin, 2rem);
+  padding: clamp(0.75rem, 3vmin, 2rem);
+  min-height: 0;
+}
+
+.prompt {
+  margin: 0;
+  font-size: clamp(1.1rem, 3.4vmin, 1.9rem);
+  font-weight: 700;
+  opacity: 0.95;
+}
+
+.hint {
+  margin: 0;
+  font-size: clamp(0.85rem, 2.2vmin, 1.15rem);
+  color: var(--muted);
+  min-height: 1.4em;
+  text-align: center;
+}
+
+/* --- Grapheme blocks (D1) --- */
+
+.word {
+  display: flex;
+  flex-wrap: wrap;          /* D8: reflow instead of assuming one line */
+  justify-content: center;
+  gap: var(--block-gap);
+  max-width: 100%;
+}
+
+.grapheme {
+  width: var(--block-size);
+  height: var(--block-size);
+  min-width: var(--tap-min);
+  min-height: var(--tap-min);
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: clamp(0.7rem, 2.2vmin, 1.3rem);
+  background: var(--block);
+  color: var(--block-ink);
+  /* Lowercase, generous letterforms — early readers meet lowercase first. */
+  font-family: inherit;
+  font-size: calc(var(--block-size) * 0.52);
+  font-weight: 800;
+  line-height: 1;
+  text-transform: lowercase;
+  box-shadow: 0 0.35rem 0 rgba(0, 0, 0, 0.28);
+  cursor: pointer;
+  position: relative;
+  transition: transform 90ms ease, box-shadow 90ms ease, background-color 160ms ease;
+}
+
+/* Multi-letter graphemes ('sh', 'igh', 'a_e') must stay inside the block. */
+.grapheme[data-len="2"] { font-size: calc(var(--block-size) * 0.38); }
+.grapheme[data-len="3"] { font-size: calc(var(--block-size) * 0.30); }
+
+.grapheme:active,
+.grapheme.is-playing {
+  transform: translateY(0.3rem);
+  box-shadow: 0 0.05rem 0 rgba(0, 0, 0, 0.28);
+  background: var(--accent);
+}
+
+/* A quiet dot marks graphemes the child has already listened to. */
+.grapheme.is-heard::after {
+  content: "";
+  position: absolute;
+  bottom: 0.45rem;
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: var(--pass);
+}
+
+/* Silent letters are shown but say nothing — they are not "broken" buttons. */
+.grapheme.is-silent {
+  background: #dfe6ec;
+  color: #8ba0b2;
+  cursor: default;
+}
+
+/* --- Child action buttons --- */
+
+.stage {
+  display: flex;
+  justify-content: center;
+  min-height: calc(var(--tap-min) + 1.5rem);
+}
+
+.action {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-height: calc(var(--tap-min) + 0.75rem);
+  padding: 0.75rem clamp(1.25rem, 4vmin, 2.5rem);
+  border: 0;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #3a2600;
+  font-family: inherit;
+  font-size: clamp(1rem, 2.8vmin, 1.5rem);
+  font-weight: 800;
+  box-shadow: 0 0.3rem 0 rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+}
+
+.action:active { transform: translateY(0.25rem); box-shadow: 0 0.05rem 0 rgba(0,0,0,0.3); }
+.action-icon { font-size: 1.2em; }
+.action-rec  { background: #ff6b6b; color: #fff; }
+.action-stop { background: #ff3b3b; color: #fff; }
+.action-play { background: #63c7f0; color: #05293a; }
+
+.pulse { animation: pulse 1s ease-in-out infinite; }
+@keyframes pulse { 50% { opacity: 0.35; } }
+
+/* --- Guardian strip (D9) — muted and set apart from the child's controls --- */
+
+.guardian {
+  width: min(34rem, 100%);
+  border-top: 1px dashed rgba(255, 255, 255, 0.22);
+  padding-top: clamp(0.6rem, 2vmin, 1rem);
+  text-align: center;
+}
+
+.guardian-q {
+  margin: 0 0 0.6rem;
+  font-size: clamp(0.8rem, 2vmin, 1rem);
+  color: var(--muted);
+}
+
+.guardian-actions { display: flex; gap: 0.75rem; justify-content: center; }
+
+.judge {
+  flex: 1 1 0;
+  max-width: 11rem;
+  min-height: var(--tap-min);
+  padding: 0.6rem 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 0.7rem;
+  background: transparent;
+  color: var(--ink);
+  font-family: inherit;
+  font-size: clamp(0.9rem, 2.2vmin, 1.1rem);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.judge-pass { background: var(--pass); border-color: transparent; }
+.judge-fail { background: var(--fail); border-color: transparent; }
+
+/* --- Celebration (D6: minimal) --- */
+
+.celebrate {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  background: rgba(0, 0, 0, 0.25);
+}
+
+.celebrate-star {
+  font-size: clamp(6rem, 34vmin, 16rem);
+  animation: pop 900ms cubic-bezier(0.2, 1.4, 0.4, 1) forwards;
+}
+
+@keyframes pop {
+  0%   { transform: scale(0.2) rotate(-25deg); opacity: 0; }
+  55%  { transform: scale(1.1) rotate(6deg);   opacity: 1; }
+  100% { transform: scale(1) rotate(0);        opacity: 0; }
+}
+
+/* --- Footer --- */
+
+.footerbar {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.5rem clamp(0.75rem, 3vmin, 1.5rem);
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.progress { font-variant-numeric: tabular-nums; }
+
+.skip {
+  min-height: var(--tap-min);
+  padding: 0.4rem 0.9rem;
+  border: 0;
+  border-radius: 0.6rem;
+  background: transparent;
+  color: var(--muted);
+  font-family: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}

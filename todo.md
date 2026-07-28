@@ -27,13 +27,27 @@ distinct from build tasks.
       settle intervals + mastery thresholds alongside the phonics scheme.
 
 ## Next — prototype
-- [ ] Source licensed isolated-phoneme audio (decisions.md D7)
-- [ ] Define the grapheme data model: word → ordered list of graphemes, each with
-      phoneme audio (decisions.md D1)
-- [ ] Build a small built-in test wordlist from the chosen scheme's first tier
-- [ ] Prototype the core loop: present word → tap graphemes → record → playback →
+- [x] Define the grapheme data model: word → ordered list of graphemes, each with
+      phoneme audio (decisions.md D1) — `app/js/data/words.js`
+- [x] Build a small built-in test wordlist from the chosen scheme's first tier —
+      L&S Phase 2 satpin-first, plus digraph/split-digraph/silent-letter words
+      included specifically to prove the grapheme model
+- [x] Prototype the core loop: present word → tap graphemes → record → playback →
       guardian pass/fail, with the blend as the pass gate (decisions.md D5)
-- [ ] Minimal pass celebration
+- [x] Minimal pass celebration
+- [x] PWA shell — manifest, service worker, icons (decisions.md D3)
+- [ ] **Source licensed isolated-phoneme audio** (decisions.md D7) — the prototype
+      currently falls back to speech synthesis and shows a banner saying the
+      sounds are placeholders. This is the main thing standing between the
+      prototype and a real trial with a child.
+- [ ] Try it on the Android tablet and confirm install + mic permission work
+
+## Observations from building the prototype
+- [ ] `@user` Pick a letterform-safe font. In a default sans, lowercase `l`
+      renders as a bare vertical stroke and is easily confused with `I`/`1` — the
+      typography concern from vision-review.md §3.4, now visible in practice.
+- [ ] Decide what a split digraph block should look like. It currently reads
+      `a_e` (scheme convention), which is correct but abstract for a young child.
 
 ## Later
 - [ ] Finish the medium-severity review pass (touch ergonomics §3.1,
