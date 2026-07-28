@@ -13,6 +13,15 @@ distinct from build tasks.
       another DfE-validated scheme). This gates the phoneme introduction order and
       the wordlist tiers. Nothing about curriculum content is settled until this
       is chosen. (decisions.md D2)
+      - Research complete — see `phonics-schemes.md` for candidates and a
+        recommendation (L&S 2007 in-app / Jolly + ORT for parent books / UFLI for
+        1.0+ GenAm). Awaiting author decision.
+- [ ] `@user` **Confirm the Letters and Sounds 2007 licence footer** (Crown
+      copyright / Open Government Licence v3.0) before the app embeds its
+      progression — see `phonics-schemes.md` "Honest gaps"
+- [ ] `@user` **Check Korean retail availability/pricing** for supplementary books
+      (Yes24 / Kyobo / Aladin; Korean Jolly Phonics distributor). Korean-language
+      searches will beat English ones here.
 - [ ] `@user` **Review spaced-repetition decision** — the Leitner-style choice in
       decisions.md D10 is tentative; confirm or replace (e.g. SM-2 / FSRS), and
       settle intervals + mastery thresholds alongside the phonics scheme.
