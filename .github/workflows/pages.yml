@@ -34,7 +34,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # enablement turns Pages on via the API if it has never been configured,
+      # which saves a manual trip to Settings -> Pages. It cannot override the
+      # account plan: Pages on a PRIVATE repo needs GitHub Pro or better.
       - uses: actions/configure-pages@v5
+        with:
+          enablement: true
 
       # app/ becomes the site root, so index.html sits at the top level and the
       # relative paths in manifest.webmanifest and sw.js resolve correctly under
