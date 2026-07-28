@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1b3a5c">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="yagui reads">
+<title>yagui reads</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+
+<!-- Visible while real phoneme audio is not yet licensed (decisions.md D7). -->
+<div id="placeholder-notice" class="notice" hidden>
+  Placeholder sounds — not real phonics audio yet
+</div>
+
+<main class="screen">
+
+  <p class="prompt" id="prompt">What is this word?</p>
+
+  <!-- The word, as GRAPHEME blocks (decisions.md D1). Wraps on narrow screens
+       so a phone port stays possible (D8). -->
+  <div class="word" id="word" role="group" aria-label="Word"></div>
+
+  <p class="hint" id="hint">Press the letters to hear the sounds</p>
+
+  <!-- Child-facing action. One big target at a time (D8). -->
+  <div class="stage" id="stage">
+    <button class="action" id="ready-btn" type="button">
+      <span class="action-icon" aria-hidden="true">🎤</span>
+      <span>I'm ready</span>
+    </button>
+
+    <button class="action action-rec" id="record-btn" type="button" hidden>
+      <span class="action-icon" aria-hidden="true">⏺</span>
+      <span>Say the word</span>
+    </button>
+
+    <button class="action action-stop" id="stop-btn" type="button" hidden>
+      <span class="action-icon pulse" aria-hidden="true">⏹</span>
+      <span>Stop</span>
+    </button>
+
+    <button class="action action-play" id="play-btn" type="button" hidden>
+      <span class="action-icon" aria-hidden="true">▶</span>
+      <span>Hear me</span>
+    </button>
+  </div>
+
+  <!-- Guardian judging (D9). Deliberately small, muted and set apart so a child
+       does not press it. The blend criterion (D5) is stated here so the guardian
+       judges the same thing every time. -->
+  <section class="guardian" id="guardian" hidden aria-label="Grown-up">
+    <p class="guardian-q">
+      Grown-up: did they <strong>blend the sounds</strong> into the whole word?
+    </p>
+    <div class="guardian-actions">
+      <button class="judge judge-fail" id="fail-btn" type="button">Try again</button>
+      <button class="judge judge-pass" id="pass-btn" type="button">Pass</button>
+    </div>
+  </section>
+
+</main>
+
+<!-- Minimal pass celebration (D6). -->
+<div class="celebrate" id="celebrate" hidden aria-hidden="true">
+  <div class="celebrate-star">⭐</div>
+</div>
+
+<footer class="footerbar">
+  <span id="progress" class="progress"></span>
+  <button id="skip-btn" class="skip" type="button">Next word ›</button>
+</footer>
+
+<script type="module" src="js/app.js"></script>
+</body>
+</html>

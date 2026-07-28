@@ -1,0 +1,52 @@
+name: Deploy app to GitHub Pages
+
+# Publishes app/ so the prototype can be opened and installed on a real tablet
+# (decisions.md D3 — Android-first PWA, iOS best-effort dogfooding). A service
+# worker and getUserMedia both require a secure context, so HTTPS hosting is a
+# prerequisite for testing on-device at all.
+
+on:
+  push:
+    branches:
+      - main
+      - claude/beginners-reading-app-ja16z8
+    paths:
+      - 'app/**'
+      - '.github/workflows/pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Let a running deploy finish rather than cancelling it mid-publish.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      # Pages must be switched on ONCE by a human, in Settings -> Pages, with
+      # Source set to "GitHub Actions". Do not add `enablement: true` here to try
+      # to automate that: it was tried and the workflow token is not permitted to
+      # create a Pages site ("Resource not accessible by integration"), which
+      # fails the run with a more confusing error than the plain one.
+      - uses: actions/configure-pages@v5
+
+      # app/ becomes the site root, so index.html sits at the top level and the
+      # relative paths in manifest.webmanifest and sw.js resolve correctly under
+      # the /yagui-reads/ subpath.
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: app
+
+      - id: deployment
+        uses: actions/deploy-pages@v4
