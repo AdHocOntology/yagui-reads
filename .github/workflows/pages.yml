@@ -5,14 +5,14 @@ name: Deploy app to GitHub Pages
 # worker and getUserMedia both require a secure context, so HTTPS hosting is a
 # prerequisite for testing on-device at all.
 
+# No paths: filter — every push to these branches redeploys. The site is a
+# handful of static files, so a needless rebuild is cheap, and that is far
+# better than a push appearing to do nothing because it missed a path glob.
 on:
   push:
     branches:
       - main
       - claude/beginners-reading-app-ja16z8
-    paths:
-      - 'app/**'
-      - '.github/workflows/pages.yml'
   workflow_dispatch:
 
 permissions:
