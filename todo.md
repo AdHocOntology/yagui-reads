@@ -40,6 +40,15 @@ distinct from build tasks.
       currently falls back to speech synthesis and shows a banner saying the
       sounds are placeholders. This is the main thing standing between the
       prototype and a real trial with a child.
+      - Research complete — see `phoneme-audio.md`. No ready-made set meets all
+        of D7 + D11 + a redistribution licence. Recommendation: record a scratch
+        set yourself for the prototype, commission a professional set for 1.0.
+- [ ] `@user` **Record a scratch phoneme set** (44 sounds, quiet room, phone) so
+      the prototype can be trialled. Learn the un-schwa'd articulation from a
+      reference first — see `phoneme-audio.md` group B.
+- [ ] `@user` Confirm the Yellow Door MP3's terms, and whether the IPA *recordings*
+      (not just the chart) are CC-licensed — both unverified, `phoneme-audio.md`
+      "Limits"
 - [ ] Try it on the Android tablet and confirm install + mic permission work
 
 ## Observations from building the prototype
